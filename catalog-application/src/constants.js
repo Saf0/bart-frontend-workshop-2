@@ -1,0 +1,5 @@
+module.exports = {
+    MOVIE_ADD: "MOVIE_ADD",
+    MOVIE_DELETE: "MOVIE_DELETE",
+    MOVIE_SET_AS_WATCHED: "MOVIE_SET_AS_WATCHED"
+};
