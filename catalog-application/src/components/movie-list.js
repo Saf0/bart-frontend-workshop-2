@@ -9,7 +9,7 @@ var MovieList = React.createClass({
         catalog: ptypes.object.isRequired,
 
         deleteMovie: ptypes.func.isRequired,
-        setMovieAsWatched: ptypes.func.isRequired
+        setChangeWatched: ptypes.func.isRequired
     },
 
     render: function () {
@@ -17,7 +17,7 @@ var MovieList = React.createClass({
 
         for (var i = 0; i < this.props.catalog.movies.length; i++) {
             var movie = this.props.catalog.movies[i];
-            moviesHtml.push(<Movie key={movie.id} setMovieAsWatched={this.props.setMovieAsWatched} deleteMovie={this.props.deleteMovie} movie={movie} />);
+            moviesHtml.push(<Movie key={movie.id} setChangeWatched={this.props.setChangeWatched} deleteMovie={this.props.deleteMovie} movie={movie} />);
         }
 
         if (moviesHtml.length == 0) {
@@ -58,8 +58,8 @@ var mapDispatchToProps = function (dispatch) {
         deleteMovie: function (movieId) {
             dispatch(actions.deleteMovie(movieId));
         },
-        setMovieAsWatched: function (movieId) {
-            dispatch(actions.setMovieAsWatched(movieId));
+        setChangeWatched: function (movieId) {
+            dispatch(actions.setChangeWatched(movieId));
         }
     }
 };
