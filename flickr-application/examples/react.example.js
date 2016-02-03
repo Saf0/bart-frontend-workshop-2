@@ -12,10 +12,12 @@ var Example = React.createClass({
     },
 
     render: function () {
-        <div>
-            Hello world
-        </div>
-
+        return(
+            <div >
+                Hello world
+             </ div >
+        )
+    }
 });
 
 module.exports = Example;
