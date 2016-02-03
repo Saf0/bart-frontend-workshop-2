@@ -12,3 +12,13 @@ if (AppElement != null) {
         AppElement
     );
 }
+
+var StateElement = document.getElementById('state-container');
+
+if (StateElement != null) {
+    var StateExample = require('./components/StateExample/StateExample.react');
+    ReactDOM.render(
+        <StateExample />,
+        StateElement
+    );
+}

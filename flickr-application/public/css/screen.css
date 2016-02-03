@@ -3,3 +3,12 @@
     vertical-align: middle;
     float: none;
 }
+
+.special-container{
+    text-align: center;
+}
+
+.special-container h1{
+    padding-top: 10%;
+    font-size: 250px;
+}
