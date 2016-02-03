@@ -32,6 +32,14 @@ var AddMovieForm = React.createClass({
         this.props.addMovie(movie);
     },
 
+    onClickBack: function() {
+        this.props.backState();
+    },
+
+    onClickNext: function() {
+        this.props.nextState();
+    },
+
     render: function () {
         var yearsHtml = [];
 
@@ -41,8 +49,12 @@ var AddMovieForm = React.createClass({
 
         return (
             <div>
+                <div className="text-right form-group">
+                    <button className="btn btn-primary" style={{marginRight: "10px"}} onClick={this.onClickBack}>späť</button>
+                    <button className="btn btn-primary" onClick={this.onClickNext}>ďalej</button>
+                </div>
                 <div data-example-id="simple-horizontal-form" className="bs-example">
-                    <form className="form-horizontal">
+                    <div className="form-horizontal">
                         <div className="form-group">
                             <label className="col-sm-2 control-label" htmlFor="inputEmail3">Názov filmu</label>
                             <div className="col-sm-10">
@@ -70,7 +82,7 @@ var AddMovieForm = React.createClass({
                                 <button onClick={this.onClickAddMovie} type="button" className="btn btn-primary">Pridať film</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <br />
             </div>
@@ -86,6 +98,12 @@ var mapDispatchToProps = function (dispatch) {
     return {
         addMovie: function (movie) {
             dispatch(actions.addMovie(movie));
+        },
+        backState: function () {
+            dispatch(actions.backState());
+        },
+        nextState: function () {
+            dispatch(actions.nextState());
         }
     }
 };

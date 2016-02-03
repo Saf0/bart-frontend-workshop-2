@@ -10,7 +10,7 @@ var Movie = React.createClass({
     },
 
     onChangeWatched: function(event) {
-        this.props.setMovieAsWatched(this.props.movie.id);
+        this.props.setChangeWatched(this.props.movie.id);
     },
 
     render: function(){

@@ -1,9 +1,9 @@
 var constants = require("./constants");
 
 module.exports = {
-    setMovieAsWatched: function (movieId) {
+    setChangeWatched: function (movieId) {
         return function (dispatch, getState) {
-            dispatch({type: constants.MOVIE_SET_AS_WATCHED, movieId: movieId});
+            dispatch({type: constants.MOVIE_CHANGE_WATCHED, movieId: movieId});
         };
     },
 
@@ -16,6 +16,18 @@ module.exports = {
     deleteMovie: function (movieId) {
         return function (dispatch, getState) {
             dispatch({type: constants.MOVIE_DELETE, movieId: movieId});
+        };
+    },
+
+    backState: function (movieId) {
+        return function (dispatch, getState) {
+            dispatch({type: constants.STATE_BACK});
+        };
+    },
+
+    nextState: function (movieId) {
+        return function (dispatch, getState) {
+            dispatch({type: constants.STATE_NEXT});
         };
     }
 };
