@@ -12,12 +12,27 @@
     position: relative;
 }
 
+#chatapp div.chat-message div.msg-delete {
+    color: white;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    background-color: red;
+    position: absolute;
+    left: 0;
+    top: 4px;
+    font-size: 15px;
+    line-height: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
 #chatapp div.chat-message div.msg-datetime {
     width: 90px;
     text-align: left;
     display: inline-block;
     position: absolute;
-    left: 0;
+    left: 17px;
     top: 0;
 }
 
@@ -61,6 +76,12 @@
 }
 
 @media screen and (max-width: 400px) {
+    #chatapp div.chat-message div.msg-delete {
+        position: relative;
+        left: auto;
+        top: auto;
+        margin: 0 auto;
+    }
     #chatapp div.chat-message div.msg-datetime {
         width: 100%;
         text-align: center;

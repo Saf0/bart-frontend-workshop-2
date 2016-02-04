@@ -17,6 +17,7 @@ var ChatApp = React.createClass({
         var myDataRef = new Firebase('https://blistering-fire-8731.firebaseio.com/chat-application/messages');
         if (myDataRef) {
             myDataRef.on('child_added', this.handleMessage);
+            myDataRef.on('child_removed', this.handleDeletedMessage);
         }
         this.setState({myDataRef: myDataRef});
 
@@ -29,8 +30,22 @@ var ChatApp = React.createClass({
 
     handleMessage: function (snapshot) {
         var newMessage = snapshot.val();
+        newMessage.$id = snapshot.key();
         var messages = this.state.messages;
         messages.unshift(newMessage);
+        this.setState({messages: messages});
+    },
+
+    handleDeletedMessage: function(snapshot) {
+        var messages = this.state.messages;
+        var id = snapshot.key();
+        for(var i = 0; i < messages.length; i++) {
+            if(messages[i].$id == id) {
+                messages.splice(i, 1);
+                break;
+            }
+        }
+
         this.setState({messages: messages});
     },
 
@@ -45,6 +60,10 @@ var ChatApp = React.createClass({
         };
 
         this.state.myDataRef.push(newMessage);
+    },
+
+    deleteMessage: function(messageId) {
+        this.state.myDataRef.child(messageId).remove()
     },
 
     login: function(nick) {
@@ -86,10 +105,12 @@ var ChatApp = React.createClass({
             messagesHtml.push(
                 <ChatMessage
                 key={i}
+                id={message.$id}
                 nick={message.nick}
                 text={message.text}
                 type={message.type}
-                datetime={datetime} />);
+                datetime={datetime}
+                onDelete={this.deleteMessage}/>);
         }
 
         var panel = null;
