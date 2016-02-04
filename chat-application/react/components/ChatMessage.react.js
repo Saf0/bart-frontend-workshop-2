@@ -5,7 +5,9 @@ var ChatMessage = React.createClass({
         nick: React.PropTypes.string.isRequired,
         text: React.PropTypes.string.isRequired,
         type: React.PropTypes.string.isRequired,
-        datetime: React.PropTypes.string.isRequired
+        datetime: React.PropTypes.string.isRequired,
+        deleteMessage: React.PropTypes.func.isRequired,
+        canDelete: React.PropTypes.bool.isRequired
     },
 
     render: function () {
@@ -23,8 +25,9 @@ var ChatMessage = React.createClass({
                 <div className="msg-nick">{this.props.nick}</div>
                 <div className="msg-separator"></div>
                 <div className={"msg-text "+colorClassName}>{this.props.text}</div>
+                {this.props.canDelete && this.props.type === "say" ? (<a style={{float: 'right'}} href="#" onClick={this.props.deleteMessage.bind(null, this.props.id)}>X</a>) : ''}
             </div>
-            );
+        );
     }
 
 });
