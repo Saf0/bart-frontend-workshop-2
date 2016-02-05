@@ -16,7 +16,8 @@ var ChatApp = React.createClass({
     componentDidMount: function () {
         var myDataRef = new Firebase('https://blistering-fire-8731.firebaseio.com/chat-application/messages');
         if (myDataRef) {
-            myDataRef.on('child_added', this.handleMessage);
+            myDataRef.orderByChild("timestamp").on('child_added', this.handleMessage);
+            myDataRef.on('child_removed', this.handleDeleteMessage);
         }
         this.setState({myDataRef: myDataRef});
 
@@ -27,10 +28,17 @@ var ChatApp = React.createClass({
         });
     },
 
+    handleDeleteMessage: function(message){
+        var messages = this.state.messages;
+        delete messages[message.key()];
+        this.setState({ messages: messages });
+    },
+
     handleMessage: function (snapshot) {
         var newMessage = snapshot.val();
+        id = snapshot.key();
         var messages = this.state.messages;
-        messages.unshift(newMessage);
+        messages[id] = newMessage;
         this.setState({messages: messages});
     },
 
@@ -45,6 +53,14 @@ var ChatApp = React.createClass({
         };
 
         this.state.myDataRef.push(newMessage);
+    },
+
+    deletedMessage: function (messageId) {
+        this.state.myDataRef.child(messageId).remove()
+    },
+
+    deleteMessage: function (id) {
+        this.state.myDataRef.child(id).remove();
     },
 
     login: function(nick) {
@@ -79,17 +95,21 @@ var ChatApp = React.createClass({
 
     render: function () {
 
+        var messages = this.state.messages;
         var messagesHtml = [];
-        for (var i = 0; i < this.state.messages.length; i++) {
-            var message = this.state.messages[i];
+        for (var id in messages) {
+            var message = messages[id];
             var datetime = moment.unix(message.timestamp).format("HH:mm:ss");
             messagesHtml.push(
                 <ChatMessage
-                key={i}
-                nick={message.nick}
-                text={message.text}
-                type={message.type}
-                datetime={datetime} />);
+                    key={id}
+                    id={id}
+                    nick={message.nick}
+                    text={message.text}
+                    type={message.type}
+                    datetime={datetime}
+                    deleteMessage={this.deleteMessage}
+                    canDelete={message.nick === this.state.nick}/>);
         }
 
         var panel = null;
@@ -109,7 +129,7 @@ var ChatApp = React.createClass({
                     </div>
                 </div>
             </div>
-            );
+        );
     }
 
 });
